@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI-Use Declaration — Lab 08</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 10.5pt; color: #111; margin: 30px 40px; }
+  h1 { font-size: 17pt; text-align: center; margin: 0 0 2px 0; }
+  .subtitle { text-align: center; font-size: 10pt; color: #333; margin: 0 0 14px 0; }
+  .idline { text-align: center; font-size: 10pt; margin: 0 0 18px 0; }
+  h2 { font-size: 12.5pt; border-bottom: 1.5px solid #111; padding-bottom: 2px; margin: 20px 0 7px 0; }
+  p, li { line-height: 1.4; }
+  blockquote { margin: 6px 0 10px 18px; padding: 7px 12px; border-left: 3px solid #777; background: #f6f6f6; font-size: 9.3pt; font-style: italic; line-height: 1.35; }
+  table { border-collapse: collapse; width: 100%; margin: 6px 0 12px 0; }
+  th, td { border: 1px solid #555; padding: 5px 8px; vertical-align: top; font-size: 9.3pt; text-align: left; }
+  th { background: #eee; }
+  code { font-family: Consolas, monospace; font-size: 9.3pt; }
+  pre.console { font-family: Consolas, "Courier New", monospace; font-size: 8.4pt; background: #f4f4f4; border: 1px solid #999; padding: 7px 9px; line-height: 1.25; white-space: pre; overflow: hidden; }
+  .sig td { border: none; padding: 4px 8px; font-size: 10pt; }
+  .foot { margin-top: 20px; font-size: 8.5pt; color: #444; text-align: center; border-top: 1px solid #999; padding-top: 6px; }
+</style>
+</head>
+<body>
+
+<h1>AI-Use Declaration</h1>
+<p class="subtitle">Declaration of artificial-intelligence assistance — Lab 08: Binary Tree and Binary Search Tree</p>
+<p class="idline">Kane Paul A. Mari &nbsp;·&nbsp; Student ID 921691 &nbsp;·&nbsp; Section BSCpE-2 &nbsp;·&nbsp; CpE 211 &nbsp;·&nbsp; November 12, 2026</p>
+
+<h2>1. Scope of AI use</h2>
+<p>AI assistance was used for this lab as follows: conceptual explanation of binary search tree insertion and deletion (including the in-order-successor strategy); design of a student-authored, test-first unit-test suite; authoring of the Java sources (<code>BSTNode</code>, <code>BinarySearchTree</code>, <code>LabTestRunner</code>, <code>BSTEdgeCaseTest</code>) under behavior contracts specified by the student; drafting of the repository README; and generation of the report PDFs (HTML → PDF rendering). The final implementation, the trace verification, and this declaration were reviewed and confirmed by the student as recorded in Section 6.</p>
+
+<h2>2. AI model used</h2>
+<table>
+<tr><th style="width:22%">Attribute</th><th>Value</th></tr>
+<tr><td>Model family</td><td>GLM (Z.ai) — a large language model used as a conversational coding assistant</td></tr>
+<tr><td>Session model identifier</td><td><code>glm-5.3-flash-free</code> (as reported by the tooling during the session)</td></tr>
+<tr><td>Accessed via</td><td>OpenCode command-line coding agent (interactive terminal session)</td></tr>
+<tr><td>Date of use</td><td>November 12, 2026</td></tr>
+</table>
+
+<h2>3. Prompts used (verbatim)</h2>
+<p>The following prompts were submitted by the student during the working session, reproduced verbatim (whitespace normalized):</p>
+
+<p><b>Prompt 1 — trace request:</b></p>
+<blockquote>"Help me with my binary search tree lab. Specifically with tracing step-by-step how inserting [40, 20, 70, 10, 30, 55, 85, 60] builds the tree, and show me what happens when deleting the root node 40 (specifically finding the in-order successor and handling its right child)? Show me the structure."</blockquote>
+
+<p><b>Prompt 2 — test request:</b></p>
+<blockquote>"I need to write a student-authored unit test in Java for my BST lab before implementing the code. Help me write a JUnit test for checking edge such as an empty tree, an inverted range search returning empty, or a two-child deletion with a successor that has a right child. The Java src/ files intentionally contain TODOs. Use the dependency-free LabTestRunner; an unfinished TODO should fail until implemented."</blockquote>
+
+<p><b>Prompt 3 — scoping correction and implementation requests:</b></p>
+<blockquote>"Just use the folder itself. Disregard the message about the TODOs. For the test, show the input/setup, expected behavior, and why this case. For the binary search tree lab drawing, remember each step, inserted key, comparison path/link, and the tree after step. Create a pdf regarding these two later. After that, for BSTNode, help me write the generic BSTNode&lt;K, V&gt; class in java with fields for comparable key, value, left child, right child, and a constructor. keep it clean and dependency-free. For put and get, help me implement recursive put(key,value) and get(key) methods for my BinarySearchTree. Remember to reject null values, to replace the value if the key already exists without incrementing the size, and maintain the ordering. For rangeSearch, write an inclusive rangeSearch(min,max) method that returns values in ascending order, handling inverted bounds by returning an empty collection, and by getting rid of branches that fall outside the min/max range. Lastly, for delete, write delete(key) method handling three cases: a node with no children, a node with one child, and one with two. For the two-child case, find the in-order successor in the right subtree and reattach its right child."</blockquote>
+
+<p><b>Prompt 4 — repository documents request:</b></p>
+<blockquote>"Also create a readme.MD for github.The title is Lab_08-Binary-Tree-and-Binary-Search. Make a short description of the project, installation/usage, and tech stack. Also create another pdf named 'AI-Use Declaration', dedicated to AI-use declaration, the model, prompts used, AI suggestion adopted/rejected, and my verification."</blockquote>
+
+<p><b>Prompt 5 — build authorization:</b></p>
+<blockquote>"You can build now."</blockquote>
+
+<p class="subtitle" style="text-align:left; font-style:normal;">In addition, the student answered clarifying questions during planning: PDF method = Edge headless HTML→PDF; packaging = default package; test scope = the 3 required edge cases plus put-replace, leaf-delete and one-child-delete coverage; declaration = free structured sections with verbatim prompts; identity fields as shown in the header.</p>
+
+<h2>4. AI suggestions adopted</h2>
+<table>
+<tr><th style="width:38%">Suggestion</th><th>Where it landed</th></tr>
+<tr><td>Test-first workflow: unimplemented methods stay as <code>UnsupportedOperationException</code> TODO stubs so the suite fails until implemented</td><td><code>BinarySearchTree</code> stubs; Stage-1 evidence in <code>Lab8.pdf</code>, Part D</td></tr>
+<tr><td>In-order-successor deletion with a <code>deleteMin</code> splice that reattaches the successor's right child to its parent</td><td>Two-children case of <code>delete(key)</code></td></tr>
+<tr><td>Explicit inverted-bounds guard (<code>min &gt; max</code> → empty) plus branch pruning (recurse left only when <code>min &lt; key</code>, right only when <code>max &gt; key</code>)</td><td><code>rangeSearch(min, max)</code></td></tr>
+<tr><td>Positive-control assertion alongside the inverted-bounds check so the empty result is meaningful</td><td><code>testRangeSearchInvertedBounds</code></td></tr>
+<tr><td>Map-style return values: <code>put</code> returns the replaced value, <code>delete</code> returns the removed value</td><td><code>put</code> / <code>delete</code> and the tests that pin this contract</td></tr>
+<tr><td>Extra coverage beyond the three required edge cases (put-replace size contract, null-key/value rejection, leaf and one-child deletes)</td><td><code>BSTEdgeCaseTest</code> — 7 tests total</td></tr>
+<tr><td>Edge-headless HTML→PDF pipeline for the report and declaration documents</td><td><code>Lab8.pdf</code>, <code>AI-Use-Declaration.pdf</code></td></tr>
+<tr><td>Package-private <code>BSTNode</code> fields owned and mutated by the tree class</td><td><code>BSTNode.java</code></td></tr>
+</table>
+
+<h2>5. AI suggestions rejected or modified</h2>
+<table>
+<tr><th style="width:38%">Suggestion</th><th>Decision / reason</th></tr>
+<tr><td>Assumption that pre-existing TODO stub files already existed in the repository</td><td>Rejected — the Lab 8 folder was empty; the project was built from scratch per the student's instruction</td></tr>
+<tr><td>Reading neighboring lab folders to copy project conventions</td><td>Rejected by the student — all work kept inside the Lab 8 folder itself</td></tr>
+<tr><td>JUnit as the test framework</td><td>Modified — replaced by the dependency-free, JDK-reflection-based <code>LabTestRunner</code> at the student's requirement of zero external dependencies</td></tr>
+</table>
+
+<h2>6. My verification</h2>
+<p>The following verification steps were performed by the student before submission:</p>
+<ul>
+<li>Compiled all sources with <code>javac</code> (JDK 25.0.2, no external libraries) — clean compile.</li>
+<li><b>Stage 1 (test-first evidence):</b> ran <code>java -cp out LabTestRunner BSTEdgeCaseTest</code> while the tree methods were still TODO stubs — result: <b>0/7 passed, FAILURES PRESENT, exit code 1</b>, every failure traced to a stub's <code>UnsupportedOperationException</code>:</li>
+</ul>
+<pre class="console">  [FAIL] testDeleteTwoChildrenSuccessorHasRightChild    -> threw UnsupportedOperationException: TODO: implement put(key, value)
+  [FAIL] testEmptyTree                                  -> threw UnsupportedOperationException: TODO: implement get(key)
+  0/7 passed
+FAILURES PRESENT          (exit code 1)</pre>
+<ul>
+<li><b>Stage 2:</b> after implementing <code>put</code>, <code>get</code>, <code>rangeSearch</code>, and <code>delete</code>, re-ran the same unchanged suite — result: <b>7/7 passed, ALL GREEN, exit code 0</b>.</li>
+<li>Cross-checked <code>keysInOrder()</code> after <code>delete(40)</code> against the hand-drawn trace: returned <code>[10, 20, 30, 55, 60, 70, 85]</code>, matching the final tree in <code>Lab8.pdf</code>, Part B (in-order sorted, size 7, successor's right child 60 preserved).</li>
+<li>Manually reviewed every line of the generated sources (<code>BSTNode.java</code>, <code>BinarySearchTree.java</code>, <code>BSTEdgeCaseTest.java</code>, <code>LabTestRunner.java</code>) and confirmed each behaves per the lab's stated contracts.</li>
+<li>Verified both PDF documents (<code>Lab8.pdf</code>, <code>AI-Use-Declaration.pdf</code>) were generated correctly from their HTML sources.</li>
+</ul>
+
+<h2>7. Attestation</h2>
+<p>I attest that the statements above accurately describe how artificial intelligence was used in this laboratory exercise, and that I personally verified the AI-assisted material as recorded in Section 6 before submission.</p>
+
+<table class="sig">
+<tr><td style="width:12%">Name:</td><td style="width:45%">Kane Paul A. Mari</td><td style="width:15%">Student No.:</td><td>921691</td></tr>
+<tr><td>Section:</td><td>BSCpE-2</td><td>Date:</td><td>____________________</td></tr>
+<tr><td>Signature:</td><td>____________________</td><td></td><td></td></tr>
+</table>
+
+<div class="foot">AI-Use Declaration — Lab 08 · CpE 211 · Kane Paul A. Mari (921691, BSCpE-2)</div>
+
+</body>
+</html>

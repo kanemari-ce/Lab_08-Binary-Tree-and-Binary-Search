@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Lab 08 — Binary Tree and Binary Search Tree</title>
+<style>
+  body { font-family: Georgia, "Times New Roman", serif; font-size: 10.5pt; color: #111; margin: 28px 34px; }
+  h1 { font-size: 17pt; text-align: center; margin: 0 0 2px 0; }
+  .subtitle { text-align: center; font-size: 10pt; color: #333; margin: 0 0 14px 0; }
+  .idline { text-align: center; font-size: 10pt; margin: 0 0 18px 0; }
+  h2 { font-size: 13pt; border-bottom: 1.5px solid #111; padding-bottom: 2px; margin: 22px 0 8px 0; }
+  h3 { font-size: 11pt; margin: 12px 0 4px 0; }
+  p, li { line-height: 1.35; }
+  table.steps { border-collapse: collapse; width: 100%; margin: 6px 0 10px 0; }
+  table.steps td, table.steps th { border: 1px solid #555; padding: 5px 8px; vertical-align: top; font-size: 9.5pt; }
+  table.steps th { background: #eee; text-align: left; }
+  table.tests { border-collapse: collapse; width: 100%; margin: 6px 0 10px 0; }
+  table.tests th, table.tests td { border: 1px solid #555; padding: 4px 6px; vertical-align: top; font-size: 8.6pt; text-align: left; }
+  table.tests th { background: #eee; }
+  pre.tree { font-family: Consolas, "Courier New", monospace; font-size: 9.5pt; line-height: 1.12; margin: 3px 0; }
+  pre.console { font-family: Consolas, "Courier New", monospace; font-size: 8.4pt; background: #f4f4f4; border: 1px solid #999; padding: 7px 9px; line-height: 1.25; white-space: pre; overflow: hidden; }
+  .path { font-family: Consolas, "Courier New", monospace; font-size: 9.3pt; }
+  .note { font-style: italic; color: #333; }
+  .hl { background: #fff3b0; font-weight: bold; }
+  code { font-family: Consolas, monospace; font-size: 9.5pt; }
+  .check { font-weight: bold; }
+</style>
+</head>
+<body>
+
+<h1>Lab 08 — Binary Tree and Binary Search Tree</h1>
+<p class="subtitle">Step-by-step BST insertion and deletion trace, with the student-authored unit-test suite</p>
+<p class="idline">Kane Paul A. Mari &nbsp;·&nbsp; Student ID 921691 &nbsp;·&nbsp; Section BSCpE-2 &nbsp;·&nbsp; CpE 211 &nbsp;·&nbsp; November 12, 2026</p>
+
+<h2>Part A — Building the tree: inserting [40, 20, 70, 10, 30, 55, 85, 60]</h2>
+<p>Navigation rule at every node: if the new key is <b>smaller</b>, go <b>left</b>; if <b>larger</b>, go <b>right</b>; the first empty spot becomes the new leaf. Each row below records the inserted key, the full comparison path, the link that was created, and the tree after the step.</p>
+
+<table class="steps">
+<tr><th style="width:46%">Step · key · comparison path · link created</th><th>Tree after the step</th></tr>
+
+<tr><td>
+<b>Step 1 — insert 40</b><br>
+Tree is empty → <b>40 becomes the root</b> (no comparisons).
+</td><td><pre class="tree">40</pre></td></tr>
+
+<tr><td>
+<b>Step 2 — insert 20</b><br>
+<span class="path">20 &lt; 40 → go left</span><br>
+Link created: <span class="path">40.left = 20</span>
+</td><td><pre class="tree">  40
+ /
+20</pre></td></tr>
+
+<tr><td>
+<b>Step 3 — insert 70</b><br>
+<span class="path">70 &gt; 40 → go right</span><br>
+Link created: <span class="path">40.right = 70</span>
+</td><td><pre class="tree">  40
+ /  \
+20    70</pre></td></tr>
+
+<tr><td>
+<b>Step 4 — insert 10</b><br>
+<span class="path">10 &lt; 40 → go left; 10 &lt; 20 → go left</span><br>
+Link created: <span class="path">20.left = 10</span>
+</td><td><pre class="tree">    40
+   /  \
+  20    70
+ /
+10</pre></td></tr>
+
+<tr><td>
+<b>Step 5 — insert 30</b><br>
+<span class="path">30 &lt; 40 → go left; 30 &gt; 20 → go right</span><br>
+Link created: <span class="path">20.right = 30</span>
+</td><td><pre class="tree">    40
+   /  \
+  20    70
+ /  \
+10    30</pre></td></tr>
+
+<tr><td>
+<b>Step 6 — insert 55</b><br>
+<span class="path">55 &gt; 40 → go right; 55 &lt; 70 → go left</span><br>
+Link created: <span class="path">70.left = 55</span>
+</td><td><pre class="tree">    40
+   /  \
+  20    70
+ /  \   /
+10    30 55</pre></td></tr>
+
+<tr><td>
+<b>Step 7 — insert 85</b><br>
+<span class="path">85 &gt; 40 → go right; 85 &gt; 70 → go right</span><br>
+Link created: <span class="path">70.right = 85</span>
+</td><td><pre class="tree">    40
+   /  \
+  20    70
+ /  \   /   \
+10    30 55  85</pre></td></tr>
+
+<tr><td>
+<b>Step 8 — insert 60</b><br>
+<span class="path">60 &gt; 40 → go right; 60 &lt; 70 → go left; 60 &gt; 55 → go right</span><br>
+Link created: <span class="path">55.right = 60</span>
+</td><td><pre class="tree">    40
+   /  \
+  20    70
+ /  \   /   \
+10    30 55  85
+           \
+            60</pre></td></tr>
+</table>
+
+<p><b>Final tree after all eight insertions:</b></p>
+<pre class="tree">    40
+   /  \
+  20    70
+ /  \   /   \
+10    30 55  85
+           \
+            60</pre>
+<p>In-order traversal of the final tree: <span class="path">10, 20, 30, 40, 55, 60, 70, 85</span> — strictly increasing, which confirms the BST ordering invariant held after every insertion.</p>
+
+<h2>Part B — Deleting the root 40 (two-children case)</h2>
+<p>Node 40 has <b>two children</b>, so it cannot simply be unlinked. The strategy: replace its data with its <b>in-order successor</b> — the smallest key in its right subtree — then splice the successor's old node out.</p>
+
+<h3>Step D1 — Find the in-order successor</h3>
+<p>From the right child (70), keep going <b>left</b> until a node with no left child is reached:</p>
+<pre class="tree">   70
+  /  \
+55    85
+  \
+   60</pre>
+<p><span class="path">70 → 55 → (55 has no left child) &nbsp;⇒&nbsp; successor = 55</span></p>
+
+<h3>Step D2 — Copy the successor's data into the root</h3>
+<p>The root now holds key <span class="hl">55</span>. The <i>original</i> 55 node is still in the right subtree (a temporary duplicate):</p>
+<pre class="tree">    55
+   /  \
+  20    70
+ /  \   /   \
+10    30 <span class="hl">55</span>  85
+           \
+            60</pre>
+
+<h3>Step D3 — Splice the old successor node out</h3>
+<p>The old 55 has <b>no left child but one right child (60)</b> — the one-child case. Its parent 70 adopts that right child:</p>
+<p><span class="path">70.left = 55.right&nbsp; ⇒&nbsp; 70.left = 60</span></p>
+
+<h3>Result after deleting 40</h3>
+<pre class="tree">    55
+   /  \
+  20    70
+ /  \   /   \
+10    30 60  85</pre>
+<p>In-order traversal: <span class="path">10, 20, 30, 55, 60, 70, 85</span> — sorted <span class="check">✓</span>, size 7 <span class="check">✓</span>. Node 60 was preserved only because the successor's right child was reattached; forgetting that step would silently lose 60.</p>
+
+<h2>Part C — Student-authored unit tests (written before the implementation)</h2>
+<p>The suite lives in <code>BSTEdgeCaseTest.java</code> and runs on the dependency-free <code>LabTestRunner</code> (no JUnit, pure JDK reflection). Every test documents its input/setup, expected behavior, and the reason the case matters. Tests were authored against TODO stubs first and had to fail; after implementation the same tests must all pass.</p>
+
+<table class="tests">
+<tr><th style="width:17%">Test</th><th style="width:28%">Input / Setup</th><th style="width:28%">Expected behavior</th><th>Why this case</th></tr>
+
+<tr><td><code>testEmptyTree</code></td>
+<td>Fresh <code>BinarySearchTree</code>, no inserts.</td>
+<td><code>size()==0</code>, <code>isEmpty()</code> true, <code>get(40)==null</code>, <code>delete(40)==null</code>, <code>rangeSearch(10,85)</code> → empty list.</td>
+<td>Every operation dereferences the root; a naive or stubbed implementation throws NullPointerException here first, so the null-root guards are verified up front.</td></tr>
+
+<tr><td><code>testRangeSearchInvertedBounds</code></td>
+<td>The lab tree built from [40, 20, 70, 10, 30, 55, 85, 60], values <code>"v"&lt;key&gt;</code>.</td>
+<td><code>rangeSearch(85, 10)</code> → <b>empty</b> list (not an exception, not garbage). Control: <code>rangeSearch(30,60)</code> → [v30, v40, v55, v60] ascending, inclusive both ends.</td>
+<td>An inverted [max..min] range is the classic contract bug: stubs and buggy pruning either throw, return everything, or return partial data. The positive control proves the method works, so the empty result for inverted bounds is meaningful.</td></tr>
+
+<tr><td><code>testDeleteTwoChildrenSuccessorHasRightChild</code></td>
+<td>The lab tree; <code>delete(40)</code>. Successor is 55 (right child 70, then leftmost) and 55 carries a right child 60.</td>
+<td><code>delete</code> returns "v40"; 40 gone; <code>size()==7</code>; <code>get(60)</code> still present; <code>get(55)</code> present exactly once; keys 10/20/30/70/85 intact; in-order keys sorted.</td>
+<td>This is exactly the Part B trace: copying the successor up without reattaching its right child silently loses node 60 — <code>get(60)</code> is the assertion that catches it.</td></tr>
+
+<tr><td><code>testPutReplaceKeepsSize</code></td>
+<td>The lab tree; <code>put(40, "root")</code> over the existing key 40.</td>
+<td><code>put</code> returns the old value "v40"; <code>get(40)</code> yields "root"; <code>size()</code> stays 8.</td>
+<td>A naive put that always creates a node (or always increments size) silently corrupts the size contract and duplicates keys.</td></tr>
+
+<tr><td><code>testPutRejectsNullKeyAndValue</code></td>
+<td>Empty tree; attempts <code>put(null, "x")</code> and <code>put(1, null)</code>.</td>
+<td>Both throw <code>IllegalArgumentException</code>; size stays 0.</td>
+<td>A null key would break <code>compareTo</code> during navigation; a null value would make "absent" indistinguishable from "mapped to null".</td></tr>
+
+<tr><td><code>testDeleteLeaf</code></td>
+<td>The lab tree; <code>delete(10)</code> — 10 is a leaf under 20.</td>
+<td>Returns "v10"; <code>get(10)==null</code>; <code>size()==7</code>; in-order remains [20, 30, 40, 55, 60, 70, 85].</td>
+<td>Simplest structural case; catches over-eager child reattachment and size-accounting bugs before the harder delete cases are examined.</td></tr>
+
+<tr><td><code>testDeleteOneChild</code></td>
+<td>The lab tree; <code>delete(55)</code> — 55 has only a right child (60).</td>
+<td>55 gone; 60 reattached under 70; <code>size()==7</code>; in-order [10, 20, 30, 40, 60, 70, 85].</td>
+<td>Verifies the parent adopts the surviving child — the same splice used when the successor itself is removed in the two-child case.</td></tr>
+</table>
+
+<h2>Part D — Test-first evidence (runner output)</h2>
+
+<h3>Stage 1 — Suite run against the TODO stubs (before implementation)</h3>
+<p>Every test fails while the methods are unimplemented, which is the required behavior: an unfinished TODO must fail until it is implemented.</p>
+<pre class="console">== BSTEdgeCaseTest ==
+  [FAIL] testDeleteLeaf                                 (6.8 ms)
+         -> threw UnsupportedOperationException: TODO: implement put(key, value)
+  [FAIL] testDeleteOneChild                             (0.3 ms)
+         -> threw UnsupportedOperationException: TODO: implement put(key, value)
+  [FAIL] testDeleteTwoChildrenSuccessorHasRightChild    (0.2 ms)
+         -> threw UnsupportedOperationException: TODO: implement put(key, value)
+  [FAIL] testEmptyTree                                  (0.1 ms)
+         -> threw UnsupportedOperationException: TODO: implement get(key)
+  [FAIL] testPutRejectsNullKeyAndValue                  (3.2 ms)
+         -> null key must be rejected: expected IllegalArgumentException but caught
+            UnsupportedOperationException: TODO: implement put(key, value)
+  [FAIL] testPutReplaceKeepsSize                        (0.3 ms)
+         -> threw UnsupportedOperationException: TODO: implement put(key, value)
+  [FAIL] testRangeSearchInvertedBounds                  (0.2 ms)
+         -> threw UnsupportedOperationException: TODO: implement put(key, value)
+  0/7 passed
+FAILURES PRESENT          (exit code 1)</pre>
+
+<h3>Stage 2 — Suite run after implementation</h3>
+<p>The same suite, unchanged, after <code>put</code>, <code>get</code>, <code>rangeSearch</code>, and <code>delete</code> were implemented:</p>
+<pre class="console">== BSTEdgeCaseTest ==
+  [PASS] testDeleteLeaf                                 (8.1 ms)
+  [PASS] testDeleteOneChild                             (0.3 ms)
+  [PASS] testDeleteTwoChildrenSuccessorHasRightChild    (0.2 ms)
+  [PASS] testEmptyTree                                  (0.4 ms)
+  [PASS] testPutRejectsNullKeyAndValue                  (3.2 ms)
+  [PASS] testPutReplaceKeepsSize                        (0.3 ms)
+  [PASS] testRangeSearchInvertedBounds                  (0.4 ms)
+  7/7 passed
+ALL GREEN                 (exit code 0)</pre>
+
+<p>Manual cross-check against the Part B trace: <code>keysInOrder()</code> after <code>delete(40)</code> returns <span class="path">[10, 20, 30, 55, 60, 70, 85]</span>, matching the hand-drawn final tree. <span class="check">✓</span></p>
+
+</body>
+</html>
